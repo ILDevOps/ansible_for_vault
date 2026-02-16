@@ -9,8 +9,7 @@ You may find it helpful to install ansible-dev-tools with `pip install ansible-d
 
 ## Architecture Diagram
 
-```mermaid
-graph TD
+```text
 +----------------+         (1) Authenticate & (2) Request Password         +----------------+
 |                |------------------------------------------------------->|                |
 |    Ansible     |                                                        |     Vault      |
