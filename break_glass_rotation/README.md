@@ -6,6 +6,26 @@ In VS Code, install the Ansible add-on.
 Set the language for the playbook/yaml files to "Ansible" rather than "yaml".
 You may find it helpful to install ansible-dev-tools with `pip install ansible-dev-tools`.
 
+
+## Architecture Diagram
+
++----------------+         (1) Authenticate & (2) Request Password         +----------------+
+|                |------------------------------------------------------->|                |
+|    Ansible     |                                                        |     Vault      |
+|  Playbook/AAP  |<-------------------(3) Return New Password-------------|                |
+|                |------(4) Write new password to Vault (KV v2) --------->|                |
++----------------+                                                        +----------------+
+        |                                                                         
+        | (5) Update break-glass account password                                 
+        v                                                                        
++----------------+                                                               
+|                |                                                               
+| Remote Linux   |                                                               
+|   System       |                                                               
+| (break-glass   |                                                               
+|   account)     |                                                               
++----------------+                                                                
+
 ## Reset local Administrator password on Windows host (break glass credential rotation)
 
 * Vault can generate a password according to a password policy.
