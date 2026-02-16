@@ -9,6 +9,7 @@ You may find it helpful to install ansible-dev-tools with `pip install ansible-d
 
 ## Architecture Diagram
 
+```mermaid
 +----------------+         (1) Authenticate & (2) Request Password         +----------------+
 |                |------------------------------------------------------->|                |
 |    Ansible     |                                                        |     Vault      |
@@ -18,13 +19,14 @@ You may find it helpful to install ansible-dev-tools with `pip install ansible-d
         |                                                                         
         | (5) Update break-glass account password                                 
         v                                                                        
-+----------------+                                                               
-|                |                                                               
-| Remote Linux   |                                                               
-|   System       |                                                               
-| (break-glass   |                                                               
-|   account)     |                                                               
-+----------------+                                                                
++----------------+
+|                |
+| Remote Linux   |
+|   System       |
+| (break-glass   |
+|   account)     |
++----------------+
+```                                                          
 
 ## Reset local Administrator password on Windows host (break glass credential rotation)
 
