@@ -24,8 +24,8 @@
       method: GET
       headers:
         X-Vault-Token: "{{ vault_token }}" 
-      register:  password_data
-      no_log: true
+    register:  password_data
+    no_log: true
 
 ## For a logging workaround see this answer here:
 ## https://serverfault.com/a/960397
@@ -50,7 +50,7 @@
         name: '{{ break_glass_linux_user }}'
         state: present                        ## "present" will create or update the account. Use "query" to not make changes
         update_password: always               ## "always" will only change password if they differ
-        password: '{{ password_data.data.password }}' ## It might be a different path in the API response. 
+        password: "{{ password_data.json.data.password | password_hash('sha512') }}" ## It might be a different path in the API response. 
         expires: '{{ vault_ttl | default(omit) }}' ##TODO: add filter to convert to time in epoch. Don't set the expiration if the ttl is not defined. Set a negative integer to remove.
         no_log: true
 
@@ -83,7 +83,8 @@
     community.hashi_vault.vault_write:
       url: https://{{vault_cluster_address}}:8200
       path: 'secret/data/{{hostname}}'
+      token: '{{ vault_token }}'
       data:
         data:
-          password: '{{password_data.data.password}}'
+          password: '{{password_data.json.data.password}}'
       no_log: true
